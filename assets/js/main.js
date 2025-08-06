@@ -4,100 +4,16 @@
 let studentsData = [];
 let filteredStudents = [];
 
-// Sample data - replace with your actual data source
-const sampleStudents = [
-    { 
-        name: "Alpha", 
-        task1: 18, 
-        task2: 19, 
-        task3: 17.5,
-        tag: "v1.2.0",
-        rank: 1, 
-        lastActivity: "2025-01-15",
-        id: "group1"
-    },
-    { 
-        name: "Beta", 
-        task1: 16, 
-        task2: 18, 
-        task3: 18.0,
-        tag: "v2.1.1",
-        rank: 2, 
-        lastActivity: "2025-01-14",
-        id: "group2"
-    },
-    { 
-        name: "Gamma", 
-        task1: 17, 
-        task2: 16, 
-        task3: 16.5,
-        tag: "v1.0.0",
-        rank: 3, 
-        lastActivity: "2025-01-13",
-        id: "group3"
-    },
-    { 
-        name: "Delta", 
-        task1: 15, 
-        task2: 17, 
-        task3: 16.0,
-        tag: "v3.0.0",
-        rank: 4, 
-        lastActivity: "2025-01-12",
-        id: "group4"
-    },
-    { 
-        name: "Epsilon", 
-        task1: 14, 
-        task2: 16, 
-        task3: 17.5,
-        tag: "v1.5.2",
-        rank: 5, 
-        lastActivity: "2025-01-11",
-        id: "group5"
-    },
-    { 
-        name: "Zeta", 
-        task1: 16, 
-        task2: 15, 
-        task3: 15.0,
-        tag: "v2.0.0",
-        rank: 6, 
-        lastActivity: "2025-01-10",
-        id: "group6"
-    },
-    { 
-        name: "Eta", 
-        task1: 13, 
-        task2: 15, 
-        tag: "v1.1.0",
-        task3: 16.5,
-        rank: 7, 
-        lastActivity: "2025-01-09",
-        id: "group7"
-    },
-    { 
-        name: "Theta", 
-        task1: 12, 
-        task2: 14, 
-        task3: 15.0,
-        tag: "v2.2.0",
-        rank: 8, 
-        lastActivity: "2025-01-08",
-        id: "group8"
-    }
-];
-
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
-function initializeApp() {
+async function initializeApp() {
     console.log('Initializing app...');
     
     // Load student data
-    loadStudentData();
+    await loadStudentData();
     console.log('Student data loaded:', studentsData.length, 'students');
     
     // Update homepage top performers if on homepage
@@ -116,23 +32,38 @@ function initializeApp() {
     updateTimestamp();
 }
 
-function loadStudentData() {
-    // In a real application, this would fetch data from an API
-    // For now, we'll use the sample data
-    studentsData = [...sampleStudents];
-    
-    // Calculate total scores and update ranks
-    studentsData.forEach(student => {
-        student.totalScore = student.task1 + student.task2 + student.task3;
-    });
-    
-    // Sort by total score descending and update ranks
-    studentsData.sort((a, b) => b.totalScore - a.totalScore);
-    studentsData.forEach((student, index) => {
-        student.rank = index + 1;
-    });
-    
-    filteredStudents = [...studentsData];
+async function loadStudentData() {
+    try {
+        // Fetch data from JSON file
+        const response = await fetch('/assets/data/leaderboard.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        
+        // Use the groups array from the JSON data
+        studentsData = [...data.groups];
+        
+        // Calculate total scores and update ranks
+        studentsData.forEach(student => {
+            student.totalScore = student.task1 + student.task2 + student.task3;
+        });
+        
+        // Sort by total score descending and update ranks
+        studentsData.sort((a, b) => b.totalScore - a.totalScore);
+        studentsData.forEach((student, index) => {
+            student.rank = index + 1;
+        });
+        
+        filteredStudents = [...studentsData];
+        
+    } catch (error) {
+        console.error('Error loading student data:', error);
+        
+        // Fallback to empty data if JSON loading fails
+        studentsData = [];
+        filteredStudents = [];
+    }
 }
 
 function updateTopPerformers() {
@@ -320,16 +251,18 @@ function refreshLeaderboard() {
         refreshBtn.disabled = true;
         refreshBtn.textContent = '🔄 Refreshing...';
         
-        // Simulate API call
-        setTimeout(() => {
-            // In a real app, this would fetch new data
-            loadStudentData();
+        // Reload data from JSON file
+        loadStudentData().then(() => {
             loadLeaderboard();
             updateTimestamp();
             
             refreshBtn.disabled = false;
             refreshBtn.textContent = '🔄 Refresh';
-        }, 1500);
+        }).catch(error => {
+            console.error('Error refreshing leaderboard:', error);
+            refreshBtn.disabled = false;
+            refreshBtn.textContent = '🔄 Refresh';
+        });
     }
 }
 
