@@ -1,0 +1,49 @@
+# Jekyll configuration for CS6223 Course Homepage
+title: "CS6223 - Advanced Topics in Software Testing"
+description: "Course homepage and leaderboard for NUS CS6223 AY2025/26"
+baseurl: ""
+url: "https://nus-cs6223-ay2526.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+
+# Collections for better organization
+collections:
+  announcements:
+    output: true
+    permalink: /:collection/:name/
+
+# Default settings
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "announcements"
+    values:
+      layout: "announcement"
+
+# Course specific settings
+course:
+  number: "CS6223"
+  title: "Advanced Topics in Software Testing"
+  semester: "AY2025/26"
+  instructor: "Manuel Rigger"
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
