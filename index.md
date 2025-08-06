@@ -68,7 +68,7 @@ title: "Course Homepage"
         </div>
 
         <div class="sidebar-widget">
-            <h3>Top Performers</h3>
+            <h3>Top Hackers</h3>
             <div class="top-performers">
                 <div class="performer-item">
                     <span class="rank">🥇</span>

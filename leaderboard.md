@@ -5,8 +5,8 @@ permalink: /leaderboard/
 ---
 
 <div class="leaderboard-header">
-    <h1>🏆 Course Leaderboard</h1>
-    <p class="subtitle">Current student rankings for {{ site.course.number }}</p>
+    <h1>🏆 Hackathon Leaderboard</h1>
+    <p class="subtitle">Current hackathon rankings</p>
     <div class="last-updated">
         <span id="last-updated">Last updated: <span class="timestamp">Loading...</span></span>
         <button id="refresh-btn" class="refresh-btn" onclick="refreshLeaderboard()">🔄 Refresh</button>
@@ -15,7 +15,7 @@ permalink: /leaderboard/
 
 <div class="leaderboard-stats">
     <div class="stat-card">
-        <h3>Total Students</h3>
+        <h3>Total Groups</h3>
         <span class="stat-number" id="total-students">--</span>
     </div>
     <div class="stat-card">
@@ -31,15 +31,18 @@ permalink: /leaderboard/
 <div class="leaderboard-container">
     <div class="leaderboard-controls">
         <div class="search-box">
-            <input type="text" id="student-search" placeholder="Search students..." onkeyup="filterStudents()">
+            <input type="text" id="student-search" placeholder="Search groups..." onkeyup="filterStudents()">
         </div>
         <div class="sort-options">
             <label for="sort-by">Sort by:</label>
             <select id="sort-by" onchange="sortLeaderboard()">
                 <option value="rank">Rank</option>
-                <option value="name">Name</option>
-                <option value="score">Score</option>
-                <option value="assignments">Assignments Completed</option>
+                <option value="name">Group Name</option>
+                <option value="tag">Tag</option>
+                <option value="total">Total</option>
+                <option value="task1">Task 1</option>
+                <option value="task2">Task 2</option>
+                <option value="task3">Task 3</option>
             </select>
         </div>
     </div>
@@ -49,17 +52,18 @@ permalink: /leaderboard/
             <thead>
                 <tr>
                     <th class="rank-col">Rank</th>
-                    <th class="name-col">Student Name</th>
-                    <th class="score-col">Total Score</th>
-                    <th class="assignments-col">Assignments</th>
-                    <th class="progress-col">Progress</th>
-                    <th class="last-activity-col">Last Activity</th>
+                    <th class="name-col">Group Name</th>
+                    <th class="tag-col">Tag</th>
+                    <th class="total-col">Total</th>
+                    <th class="task1-col">Task 1</th>
+                    <th class="task2-col">Task 2</th>
+                    <th class="task3-col">Task 3</th>
                 </tr>
             </thead>
             <tbody id="leaderboard-body">
                 <!-- Leaderboard data will be populated here -->
                 <tr class="loading-row">
-                    <td colspan="6">
+                    <td colspan="7">
                         <div class="loading-spinner">Loading leaderboard data...</div>
                     </td>
                 </tr>
@@ -71,21 +75,3 @@ permalink: /leaderboard/
 <div class="leaderboard-footer">
     <p><strong>Note:</strong> Scores are updated automatically. If you believe there's an error in your score, please contact the course staff.</p>
 </div>
-
-<!-- Sample data script (you can replace this with actual data loading) -->
-<script>
-// Sample student data - replace this with your actual data source
-const sampleStudents = [
-    { name: "Alice Chen", score: 95, assignments: 8, rank: 1, progress: 95, lastActivity: "2025-01-15" },
-    { name: "Bob Wilson", score: 92, assignments: 8, rank: 2, progress: 92, lastActivity: "2025-01-14" },
-    { name: "Carol Zhang", score: 89, assignments: 7, rank: 3, progress: 87, lastActivity: "2025-01-13" },
-    { name: "David Lee", score: 87, assignments: 7, rank: 4, progress: 85, lastActivity: "2025-01-12" },
-    { name: "Emma Garcia", score: 85, assignments: 6, rank: 5, progress: 82, lastActivity: "2025-01-11" },
-    // Add more sample data as needed
-];
-
-// Initialize leaderboard on page load
-document.addEventListener('DOMContentLoaded', function() {
-    loadLeaderboard();
-});
-</script>

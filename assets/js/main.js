@@ -7,84 +7,84 @@ let filteredStudents = [];
 // Sample data - replace with your actual data source
 const sampleStudents = [
     { 
-        name: "Alice Chen", 
-        score: 95, 
-        assignments: 8, 
-        totalAssignments: 10,
+        name: "Alpha", 
+        task1: 18, 
+        task2: 19, 
+        task3: 17.5,
+        tag: "v1.2.0",
         rank: 1, 
-        progress: 95, 
         lastActivity: "2025-01-15",
-        id: "student1"
+        id: "group1"
     },
     { 
-        name: "Bob Wilson", 
-        score: 92, 
-        assignments: 8, 
-        totalAssignments: 10,
+        name: "Beta", 
+        task1: 16, 
+        task2: 18, 
+        task3: 18.0,
+        tag: "v2.1.1",
         rank: 2, 
-        progress: 92, 
         lastActivity: "2025-01-14",
-        id: "student2"
+        id: "group2"
     },
     { 
-        name: "Carol Zhang", 
-        score: 89, 
-        assignments: 7, 
-        totalAssignments: 10,
+        name: "Gamma", 
+        task1: 17, 
+        task2: 16, 
+        task3: 16.5,
+        tag: "v1.0.0",
         rank: 3, 
-        progress: 87, 
         lastActivity: "2025-01-13",
-        id: "student3"
+        id: "group3"
     },
     { 
-        name: "David Lee", 
-        score: 87, 
-        assignments: 7, 
-        totalAssignments: 10,
+        name: "Delta", 
+        task1: 15, 
+        task2: 17, 
+        task3: 16.0,
+        tag: "v3.0.0",
         rank: 4, 
-        progress: 85, 
         lastActivity: "2025-01-12",
-        id: "student4"
+        id: "group4"
     },
     { 
-        name: "Emma Garcia", 
-        score: 85, 
-        assignments: 6, 
-        totalAssignments: 10,
+        name: "Epsilon", 
+        task1: 14, 
+        task2: 16, 
+        task3: 17.5,
+        tag: "v1.5.2",
         rank: 5, 
-        progress: 82, 
         lastActivity: "2025-01-11",
-        id: "student5"
+        id: "group5"
     },
     { 
-        name: "Frank Kumar", 
-        score: 83, 
-        assignments: 6, 
-        totalAssignments: 10,
+        name: "Zeta", 
+        task1: 16, 
+        task2: 15, 
+        task3: 15.0,
+        tag: "v2.0.0",
         rank: 6, 
-        progress: 80, 
         lastActivity: "2025-01-10",
-        id: "student6"
+        id: "group6"
     },
     { 
-        name: "Grace Wong", 
-        score: 81, 
-        assignments: 5, 
-        totalAssignments: 10,
+        name: "Eta", 
+        task1: 13, 
+        task2: 15, 
+        tag: "v1.1.0",
+        task3: 16.5,
         rank: 7, 
-        progress: 78, 
         lastActivity: "2025-01-09",
-        id: "student7"
+        id: "group7"
     },
     { 
-        name: "Henry Chen", 
-        score: 79, 
-        assignments: 5, 
-        totalAssignments: 10,
+        name: "Theta", 
+        task1: 12, 
+        task2: 14, 
+        task3: 15.0,
+        tag: "v2.2.0",
         rank: 8, 
-        progress: 75, 
         lastActivity: "2025-01-08",
-        id: "student8"
+        id: "group8"
     }
 ];
 
@@ -94,15 +94,22 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeApp() {
+    console.log('Initializing app...');
+    
     // Load student data
     loadStudentData();
+    console.log('Student data loaded:', studentsData.length, 'students');
     
     // Update homepage top performers if on homepage
     updateTopPerformers();
     
     // Initialize leaderboard if on leaderboard page
-    if (document.getElementById('leaderboard-table')) {
+    const leaderboardTable = document.getElementById('leaderboard-table');
+    if (leaderboardTable) {
+        console.log('Found leaderboard table, loading leaderboard...');
         loadLeaderboard();
+    } else {
+        console.log('No leaderboard table found on this page');
     }
     
     // Update last updated timestamp
@@ -113,11 +120,19 @@ function loadStudentData() {
     // In a real application, this would fetch data from an API
     // For now, we'll use the sample data
     studentsData = [...sampleStudents];
-    filteredStudents = [...studentsData];
     
-    // Sort by rank
-    studentsData.sort((a, b) => a.rank - b.rank);
-    filteredStudents.sort((a, b) => a.rank - b.rank);
+    // Calculate total scores and update ranks
+    studentsData.forEach(student => {
+        student.totalScore = student.task1 + student.task2 + student.task3;
+    });
+    
+    // Sort by total score descending and update ranks
+    studentsData.sort((a, b) => b.totalScore - a.totalScore);
+    studentsData.forEach((student, index) => {
+        student.rank = index + 1;
+    });
+    
+    filteredStudents = [...studentsData];
 }
 
 function updateTopPerformers() {
@@ -132,7 +147,7 @@ function updateTopPerformers() {
                 
                 if (nameSpan && scoreSpan) {
                     nameSpan.textContent = student.name;
-                    scoreSpan.textContent = student.score;
+                    scoreSpan.textContent = student.totalScore.toFixed(1);
                 }
             }
         });
@@ -154,27 +169,33 @@ function updateLeaderboardStats() {
     }
     
     if (averageScoreEl && studentsData.length > 0) {
-        const average = studentsData.reduce((sum, student) => sum + student.score, 0) / studentsData.length;
+        const average = studentsData.reduce((sum, student) => sum + student.totalScore, 0) / studentsData.length;
         averageScoreEl.textContent = average.toFixed(1);
     }
     
     if (highestScoreEl && studentsData.length > 0) {
-        const highest = Math.max(...studentsData.map(student => student.score));
-        highestScoreEl.textContent = highest;
+        const highest = Math.max(...studentsData.map(student => student.totalScore));
+        highestScoreEl.textContent = highest.toFixed(1);
     }
 }
 
 function renderLeaderboardTable() {
     const tableBody = document.getElementById('leaderboard-body');
     
-    if (!tableBody) return;
+    if (!tableBody) {
+        console.error('leaderboard-body element not found');
+        return;
+    }
+    
+    // Clear any existing loading content
+    tableBody.innerHTML = '';
     
     if (filteredStudents.length === 0) {
         tableBody.innerHTML = `
             <tr>
-                <td colspan="6" class="no-data">
+                <td colspan="7" class="no-data">
                     <div style="text-align: center; padding: 2rem; color: #6c757d;">
-                        No students found.
+                        No groups found.
                     </div>
                 </td>
             </tr>
@@ -183,7 +204,6 @@ function renderLeaderboardTable() {
     }
     
     const rows = filteredStudents.map(student => {
-        const progressPercentage = (student.assignments / student.totalAssignments) * 100;
         const rankDisplay = getRankDisplay(student.rank);
         const lastActivityFormatted = formatDate(student.lastActivity);
         
@@ -197,22 +217,20 @@ function renderLeaderboardTable() {
                         <span class="student-name">${student.name}</span>
                     </div>
                 </td>
-                <td class="score-cell">
-                    <span class="score-value">${student.score}</span>
+                <td class="tag-cell">
+                    <span class="submission-tag">${student.tag || 'N/A'}</span>
                 </td>
-                <td class="assignments-cell">
-                    <span class="assignments-count">${student.assignments}/${student.totalAssignments}</span>
+                <td class="total-cell">
+                    <span class="total-score">${student.totalScore.toFixed(1)}</span>
                 </td>
-                <td class="progress-cell">
-                    <div class="progress-container">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${progressPercentage}%"></div>
-                        </div>
-                        <span class="progress-text">${progressPercentage.toFixed(0)}%</span>
-                    </div>
+                <td class="task1-cell">
+                    <span class="task-score">${student.task1}</span>
                 </td>
-                <td class="activity-cell">
-                    <span class="activity-date">${lastActivityFormatted}</span>
+                <td class="task2-cell">
+                    <span class="task-score">${student.task2}</span>
+                </td>
+                <td class="task3-cell">
+                    <span class="task-score">${student.task3.toFixed(1)}</span>
                 </td>
             </tr>
         `;
@@ -276,10 +294,16 @@ function sortLeaderboard() {
         switch (sortBy) {
             case 'name':
                 return a.name.localeCompare(b.name);
-            case 'score':
-                return b.score - a.score;
-            case 'assignments':
-                return b.assignments - a.assignments;
+            case 'task1':
+                return b.task1 - a.task1;
+            case 'task2':
+                return b.task2 - a.task2;
+            case 'task3':
+                return b.task3 - a.task3;
+            case 'total':
+                return b.totalScore - a.totalScore;
+            case 'tag':
+                return (a.tag || '').localeCompare(b.tag || '');
             case 'rank':
             default:
                 return a.rank - b.rank;
@@ -327,14 +351,22 @@ function updateTimestamp() {
 // Utility functions for data management
 function addStudent(studentData) {
     // Add validation here
-    if (!studentData.name || !studentData.score) {
-        console.error('Invalid student data');
+    if (!studentData.name || studentData.task1 === undefined || studentData.task2 === undefined || studentData.task3 === undefined) {
+        console.error('Invalid group data');
+        return false;
+    }
+    
+    // Validate score ranges
+    if (studentData.task1 < 0 || studentData.task1 > 20 || 
+        studentData.task2 < 0 || studentData.task2 > 20 || 
+        studentData.task3 < 0 || studentData.task3 > 20) {
+        console.error('Task scores must be between 0 and 20');
         return false;
     }
     
     const newStudent = {
         ...studentData,
-        id: `student_${Date.now()}`,
+        id: `group_${Date.now()}`,
         lastActivity: new Date().toISOString().split('T')[0]
     };
     
@@ -366,8 +398,13 @@ function updateStudent(studentId, updatedData) {
 }
 
 function updateRanks() {
-    // Sort by score descending
-    studentsData.sort((a, b) => b.score - a.score);
+    // Calculate total scores
+    studentsData.forEach(student => {
+        student.totalScore = student.task1 + student.task2 + student.task3;
+    });
+    
+    // Sort by total score descending
+    studentsData.sort((a, b) => b.totalScore - a.totalScore);
     
     // Update ranks
     studentsData.forEach((student, index) => {
