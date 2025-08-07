@@ -1,14 +1,15 @@
-# CS6223 Course Homepage
+# CS6223 Hackathon Leaderboard
 
-A modern, responsive Jekyll-based website for the CS6223 Advanced Topics in Database Systems course at NUS.
+A modern, responsive Jekyll-based website for the CS6223 Hackathon Leaderboard at NUS.
 
 ## Features
 
-- 🏆 **Interactive Leaderboard** - Real-time student rankings with filtering and sorting
-- 📢 **Announcements System** - Course updates and important notices
+- 🏆 **Interactive Leaderboard** - Real-time hackathon rankings with filtering and sorting
+- � **Live Statistics** - Total groups, average scores, and highest scores
 - 📱 **Responsive Design** - Works perfectly on desktop and mobile devices
 - 🎨 **Modern UI** - Clean, professional design with smooth animations
 - ⚡ **Fast Loading** - Optimized for GitHub Pages
+- 🔄 **Auto Refresh** - Dynamic data loading from JSON file
 
 ## Quick Start
 
@@ -23,10 +24,10 @@ A modern, responsive Jekyll-based website for the CS6223 Advanced Topics in Data
    - Edit `_config.yml` to update course details
    - Modify instructor name, semester, and other course info
 
-3. **Update Student Data**
-   - Edit `/assets/js/main.js`
-   - Replace the `sampleStudents` array with your actual student data
-   - See `_data/README.md` for detailed instructions
+3. **Update Leaderboard Data**
+   - Edit `/assets/data/leaderboard.json`
+   - Update group information, scores, and metadata
+   - See `assets/data/README.md` for detailed instructions
 
 ## Project Structure
 
@@ -34,48 +35,40 @@ A modern, responsive Jekyll-based website for the CS6223 Advanced Topics in Data
 ├── _config.yml              # Jekyll configuration
 ├── _layouts/
 │   └── default.html         # Main page template
-├── _announcements/          # Course announcements
 ├── assets/
 │   ├── css/style.css       # Styling
-│   └── js/main.js          # JavaScript functionality
-├── index.md                # Homepage
-├── leaderboard.md          # Leaderboard page
-├── announcements.md        # Announcements page
+│   ├── js/main.js          # JavaScript functionality
+│   └── data/
+│       └── leaderboard.json # Leaderboard data
+├── index.md                # Homepage with leaderboard
 └── Gemfile                 # Ruby dependencies
 ```
 
 ## Customization
 
-### Adding Announcements
-Create new markdown files in `_announcements/` folder:
+### Updating Leaderboard Data
+Edit the `/assets/data/leaderboard.json` file:
 
-```markdown
----
-title: "Your Announcement Title"
-date: 2025-01-15
-important: true  # Optional: adds "Important" badge
----
-
-Your announcement content here...
-```
-
-### Updating Student Data
-Replace the sample data in `/assets/js/main.js`:
-
-```javascript
-const sampleStudents = [
+```json
+{
+  "metadata": {
+    "lastUpdated": "2025-01-15T10:30:00Z",
+    "version": "1.0",
+    "totalGroups": 8,
+    "competitionName": "CS6223 Hackathon"
+  },
+  "groups": [
     {
-        name: "Student Name",
-        score: 95,
-        assignments: 8,
-        totalAssignments: 10,
-        rank: 1,
-        progress: 95,
-        lastActivity: "2025-01-15",
-        id: "student1"
-    },
-    // Add more students...
-];
+      "name": "Alpha",
+      "task1": 18,
+      "task2": 19,
+      "task3": 17.5,
+      "tag": "v1.2.0",
+      "lastActivity": "2025-01-15",
+      "id": "group1"
+    }
+  ]
+}
 ```
 
 ### Styling Changes
@@ -119,10 +112,10 @@ Modify `/assets/css/style.css` to customize:
 ## Data Management
 
 For real-world usage, consider:
-- **CSV Import**: Convert spreadsheet data to JavaScript format
-- **API Integration**: Fetch data from your LMS or database
-- **GitHub Actions**: Automate data updates
-- **Privacy**: Use student IDs instead of full names for public sites
+- **Automated Updates**: Use GitHub Actions to update `leaderboard.json`
+- **API Integration**: Fetch data from your scoring system
+- **Privacy**: Use group names or IDs instead of personal information
+- **Monitoring**: Set up monitoring script using `scripts/monitor-leaderboard.sh`
 
 ## Browser Support
 

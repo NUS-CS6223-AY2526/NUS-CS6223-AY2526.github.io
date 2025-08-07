@@ -1,6 +1,6 @@
-# Jekyll configuration for CS6223 Course Homepage
-title: "CS6223 - Advanced Topics in Software Testing"
-description: "Course homepage and leaderboard for NUS CS6223 AY2025/26"
+# Jekyll configuration for CS6223 Hackathon Leaderboard
+title: "CS6223 - Hackathon Leaderboard"
+description: "Hackathon leaderboard for NUS CS6223 AY2025/26"
 baseurl: ""
 url: "https://nus-cs6223-ay2526.github.io"
 
@@ -13,25 +13,6 @@ theme: minima
 plugins:
   - jekyll-feed
   - jekyll-sitemap
-
-# Collections for better organization
-collections:
-  announcements:
-    output: true
-    permalink: /:collection/:name/
-
-# Default settings
-defaults:
-  - scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "post"
-  - scope:
-      path: ""
-      type: "announcements"
-    values:
-      layout: "announcement"
 
 # Course specific settings
 course:
@@ -47,3 +28,5 @@ exclude:
   - Gemfile.lock
   - node_modules
   - vendor
+  - _announcements
+  - announcements.md

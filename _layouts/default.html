@@ -12,18 +12,11 @@
         <div class="container">
             <div class="header-content">
                 <h1 class="site-title">
-                    <a href="{{ '/' | relative_url }}">{{ site.course.number }}</a>
+                    <a href="{{ '/' | relative_url }}">{{ site.course.number }} Hackathon Leaderboard</a>
                 </h1>
                 <p class="site-subtitle">{{ site.course.title }}</p>
                 <p class="semester">{{ site.course.semester }}</p>
             </div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Home</a></li>
-                    <li><a href="{{ '/leaderboard' | relative_url }}" {% if page.url == '/leaderboard/' %}class="active"{% endif %}>Leaderboard</a></li>
-                    <li><a href="{{ '/announcements' | relative_url }}" {% if page.url contains '/announcements' %}class="active"{% endif %}>Announcements</a></li>
-                </ul>
-            </nav>
         </div>
     </header>
 

@@ -1,92 +1,76 @@
 ---
 layout: default
-title: "Course Homepage"
+title: "CS6223 Hackathon Leaderboard"
 ---
 
-<div class="hero-section">
-    <h1>Welcome to {{ site.course.number }}</h1>
-    <h2>{{ site.course.title }}</h2>
-    <p class="lead">{{ site.course.semester }}</p>
+<div class="leaderboard-header">
+    <div class="last-updated">
+        <span id="last-updated">Last updated: <span class="timestamp">Loading...</span></span>
+        <button id="refresh-btn" class="refresh-btn" onclick="refreshLeaderboard()">🔄 Refresh</button>
+    </div>
 </div>
 
-<div class="content-grid">
-    <div class="main-content-area">
-        <section class="course-info">
-            <h2>Course Information</h2>
-            <div class="info-grid">
-                <div class="info-item">
-                    <h3>Instructor</h3>
-                    <p>{{ site.course.instructor }}</p>
-                </div>
-                <div class="info-item">
-                    <h3>Course Code</h3>
-                    <p>{{ site.course.number }}</p>
-                </div>
-                <div class="info-item">
-                    <h3>Semester</h3>
-                    <p>{{ site.course.semester }}</p>
-                </div>
-            </div>
-        </section>
+<div class="leaderboard-stats">
+    <div class="stat-card">
+        <h3>Total Groups</h3>
+        <span class="stat-number" id="total-students">--</span>
+    </div>
+    <div class="stat-card">
+        <h3>Average Score</h3>
+        <span class="stat-number" id="average-score">--</span>
+    </div>
+    <div class="stat-card">
+        <h3>Highest Score</h3>
+        <span class="stat-number" id="highest-score">--</span>
+    </div>
+</div>
 
-        <section class="quick-links">
-            <h2>Quick Links</h2>
-            <div class="links-grid">
-                <a href="{{ '/leaderboard' | relative_url }}" class="link-card">
-                    <h3>📊 Leaderboard</h3>
-                    <p>View current student rankings and scores</p>
-                </a>
-                <a href="{{ '/announcements' | relative_url }}" class="link-card">
-                    <h3>📢 Announcements</h3>
-                    <p>Latest course updates and news</p>
-                </a>
-                <a href="#assignments" class="link-card">
-                    <h3>📝 Assignments</h3>
-                    <p>Assignment details and deadlines</p>
-                </a>
-                <a href="#resources" class="link-card">
-                    <h3>📚 Resources</h3>
-                    <p>Course materials and references</p>
-                </a>
-            </div>
-        </section>
+<div class="leaderboard-container">
+    <div class="leaderboard-controls">
+        <div class="search-box">
+            <input type="text" id="student-search" placeholder="Search groups..." onkeyup="filterStudents()">
+        </div>
+        <div class="sort-options">
+            <label for="sort-by">Sort by:</label>
+            <select id="sort-by" onchange="sortLeaderboard()">
+                <option value="rank">Rank</option>
+                <option value="name">Group Name</option>
+                <option value="tag">Tag</option>
+                <option value="total">Total</option>
+                <option value="task1">Task 1</option>
+                <option value="task2">Task 2</option>
+                <option value="task3">Task 3</option>
+            </select>
+        </div>
     </div>
 
-    <aside class="sidebar">
-        <div class="sidebar-widget">
-            <h3>Latest Announcements</h3>
-            <div class="announcement-list">
-                {% for announcement in site.announcements limit:3 %}
-                <div class="announcement-item">
-                    <h4><a href="{{ announcement.url | relative_url }}">{{ announcement.title }}</a></h4>
-                    <p class="date">{{ announcement.date | date: "%B %d, %Y" }}</p>
-                </div>
-                {% else %}
-                <p>No announcements yet.</p>
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="sidebar-widget">
-            <h3>Top Hackers</h3>
-            <div class="top-performers">
-                <div class="performer-item">
-                    <span class="rank">🥇</span>
-                    <span class="name">Loading...</span>
-                    <span class="score">---</span>
-                </div>
-                <div class="performer-item">
-                    <span class="rank">🥈</span>
-                    <span class="name">Loading...</span>
-                    <span class="score">---</span>
-                </div>
-                <div class="performer-item">
-                    <span class="rank">🥉</span>
-                    <span class="name">Loading...</span>
-                    <span class="score">---</span>
-                </div>
-            </div>
-            <a href="{{ '/leaderboard' | relative_url }}" class="view-all-btn">View Full Leaderboard</a>
-        </div>
-    </aside>
+    <div class="leaderboard-table-container">
+        <table class="leaderboard-table" id="leaderboard-table">
+            <thead>
+                <tr>
+                    <th class="rank-col">Rank</th>
+                    <th class="name-col">Group Name</th>
+                    <th class="tag-col">Tag</th>
+                    <th class="total-col">Total</th>
+                    <th class="task1-col">Task 1</th>
+                    <th class="task2-col">Task 2</th>
+                    <th class="task3-col">Task 3</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboard-body">
+                <!-- Leaderboard data will be populated here -->
+                <tr class="loading-row">
+                    <td colspan="7">
+                        <div class="loading-spinner">Loading leaderboard data...</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<div class="leaderboard-footer">
+    <p><strong>Note:</strong> Scores are updated automatically. If you believe there's an error in your score, please contact the course staff.</p>
+</div>
+
+<script src="{{ '/assets/js/main.js' | relative_url }}"></script>

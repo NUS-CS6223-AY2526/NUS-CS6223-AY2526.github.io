@@ -3,6 +3,7 @@
 // Global variables
 let studentsData = [];
 let filteredStudents = [];
+let leaderboardMetadata = null;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -40,6 +41,9 @@ async function loadStudentData() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        
+        // Store metadata for timestamp display
+        leaderboardMetadata = data.metadata;
         
         // Use the groups array from the JSON data
         studentsData = [...data.groups];
@@ -269,7 +273,18 @@ function refreshLeaderboard() {
 function updateTimestamp() {
     const timestampEl = document.querySelector('.timestamp');
     
-    if (timestampEl) {
+    if (timestampEl && leaderboardMetadata && leaderboardMetadata.lastUpdated) {
+        // Use the timestamp from the JSON metadata
+        const lastUpdated = new Date(leaderboardMetadata.lastUpdated);
+        timestampEl.textContent = lastUpdated.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    } else if (timestampEl) {
+        // Fallback to current time if metadata is not available
         const now = new Date();
         timestampEl.textContent = now.toLocaleString('en-US', {
             year: 'numeric',
