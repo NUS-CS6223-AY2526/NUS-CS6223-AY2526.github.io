@@ -1,82 +1,118 @@
 {
-  "metadata": {
-    "lastUpdated": "2025-01-15T10:30:00Z",
-    "version": "1.0",
-    "totalGroups": 8,
-    "competitionName": "CS6223 Hackathon"
-  },
-  "groups": [
-    {
-      "name": "Alpha",
-      "task1": 18,
-      "task2": 19,
-      "task3": 17.5,
-      "tag": "v1.2.0",
-      "lastActivity": "2025-01-15",
-      "id": "group1"
+    "metadata": {
+        "lastUpdated": "2025-08-07T00:00:00Z",
+        "version": "1.0",
+        "totalGroups": 12,
+        "competitionName": "CS6223 Hackathon"
     },
-    {
-      "name": "Beta",
-      "task1": 16,
-      "task2": 18,
-      "task3": 18.0,
-      "tag": "v2.1.1",
-      "lastActivity": "2025-01-14",
-      "id": "group2"
-    },
-    {
-      "name": "Gamma",
-      "task1": 17,
-      "task2": 16,
-      "task3": 16.5,
-      "tag": "v1.0.0",
-      "lastActivity": "2025-01-13",
-      "id": "group3"
-    },
-    {
-      "name": "Delta",
-      "task1": 15,
-      "task2": 17,
-      "task3": 16.0,
-      "tag": "v3.0.0",
-      "lastActivity": "2025-01-12",
-      "id": "group4"
-    },
-    {
-      "name": "Epsilon",
-      "task1": 14,
-      "task2": 16,
-      "task3": 17.5,
-      "tag": "v1.5.2",
-      "lastActivity": "2025-01-11",
-      "id": "group5"
-    },
-    {
-      "name": "Zeta",
-      "task1": 16,
-      "task2": 15,
-      "task3": 15.0,
-      "tag": "v2.0.0",
-      "lastActivity": "2025-01-10",
-      "id": "group6"
-    },
-    {
-      "name": "Eta",
-      "task1": 13,
-      "task2": 15,
-      "task3": 16.5,
-      "tag": "v1.1.0",
-      "lastActivity": "2025-01-09",
-      "id": "group7"
-    },
-    {
-      "name": "Theta",
-      "task1": 12,
-      "task2": 14,
-      "task3": 15.0,
-      "tag": "v2.2.0",
-      "lastActivity": "2025-01-08",
-      "id": "group8"
-    }
-  ]
+    "groups": [
+        {
+            "name": "Alpha",
+            "task1": 18,
+            "task2": 19,
+            "task3": 17.5,
+            "tag": "v1.2.0",
+            "lastActivity": "2025-01-15",
+            "id": "group1"
+        },
+        {
+            "name": "Beta",
+            "task1": 16,
+            "task2": 18,
+            "task3": 18.0,
+            "tag": "v2.1.1",
+            "lastActivity": "2025-01-14",
+            "id": "group2"
+        },
+        {
+            "name": "Gamma",
+            "task1": 17,
+            "task2": 16,
+            "task3": 16.5,
+            "tag": "v1.0.0",
+            "lastActivity": "2025-01-13",
+            "id": "group3"
+        },
+        {
+            "name": "Delta",
+            "task1": 15,
+            "task2": 17,
+            "task3": 16.0,
+            "tag": "v3.0.0",
+            "lastActivity": "2025-01-12",
+            "id": "group4"
+        },
+        {
+            "name": "Epsilon",
+            "task1": 14,
+            "task2": 16,
+            "task3": 17.5,
+            "tag": "v1.5.2",
+            "lastActivity": "2025-01-11",
+            "id": "group5"
+        },
+        {
+            "name": "Zeta",
+            "task1": 16,
+            "task2": 15,
+            "task3": 15.0,
+            "tag": "v2.0.0",
+            "lastActivity": "2025-01-10",
+            "id": "group6"
+        },
+        {
+            "name": "Eta",
+            "task1": 13,
+            "task2": 15,
+            "task3": 16.5,
+            "tag": "v1.1.0",
+            "lastActivity": "2025-01-09",
+            "id": "group7"
+        },
+        {
+            "name": "Theta",
+            "task1": 12,
+            "task2": 14,
+            "task3": 15.0,
+            "tag": "v2.2.0",
+            "lastActivity": "2025-01-08",
+            "id": "group8"
+        },
+        {
+            "name": "template",
+            "task1": 2,
+            "task2": 0,
+            "task3": 0,
+            "tag": "v1.0",
+            "lastActivity": "2025-01-15",
+            "id": "group9"
+        },
+        {
+            "name": "template",
+            "task1": 0.5,
+            "task2": 0,
+            "task3": 0,
+            "tag": "v14",
+            "lastActivity": "2025-08-06",
+            "id": "group9"
+        },
+        {
+            "name": "template",
+            "task1": 0.5,
+            "task2": 0,
+            "task3": 0,
+            "tag": "v16",
+            "lastActivity": "2025-08-06",
+            "id": "group9"
+        },
+        {
+            "name": "template",
+            "task1": 0.5,
+            "task2": 0,
+            "task3": 0,
+            "tag": "v17",
+            "lastActivity": "2025-08-07",
+            "id": "group9"
+        }
+    ]
 }
