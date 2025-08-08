@@ -12,7 +12,7 @@ title: "CS6223 Hackathon Leaderboard"
 
 <div class="leaderboard-stats">
     <div class="stat-card">
-        <h3>Total Groups</h3>
+        <h3>Total Submissions</h3>
         <span class="stat-number" id="total-students">--</span>
     </div>
     <div class="stat-card">
