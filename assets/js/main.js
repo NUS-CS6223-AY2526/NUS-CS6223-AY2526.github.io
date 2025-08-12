@@ -5,6 +5,11 @@ let studentsData = [];
 let filteredStudents = [];
 let leaderboardMetadata = null;
 
+// Pagination variables
+let currentPage = 1;
+let itemsPerPage = 20;
+let totalPages = 1;
+
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
@@ -135,10 +140,19 @@ function renderLeaderboardTable() {
                 </td>
             </tr>
         `;
+        updatePaginationInfo();
         return;
     }
     
-    const rows = filteredStudents.map(student => {
+    // Calculate pagination
+    calculatePagination();
+    
+    // Get items for current page
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = itemsPerPage === 'all' ? filteredStudents.length : startIndex + itemsPerPage;
+    const currentPageStudents = itemsPerPage === 'all' ? filteredStudents : filteredStudents.slice(startIndex, endIndex);
+    
+    const rows = currentPageStudents.map(student => {
         const rankDisplay = getRankDisplay(student.rank);
         const lastActivityFormatted = formatDate(student.lastActivity);
         
@@ -172,6 +186,10 @@ function renderLeaderboardTable() {
     }).join('');
     
     tableBody.innerHTML = rows;
+    
+    // Update pagination controls
+    updatePaginationControls();
+    updatePaginationInfo();
     
     // Add fade-in animation
     setTimeout(() => {
@@ -219,6 +237,8 @@ function filterStudents() {
         student.name.toLowerCase().includes(searchTerm)
     );
     
+    // Reset to first page when filtering
+    currentPage = 1;
     renderLeaderboardTable();
 }
 
@@ -245,6 +265,8 @@ function sortLeaderboard() {
         }
     });
     
+    // Reset to first page when sorting
+    currentPage = 1;
     renderLeaderboardTable();
 }
 
@@ -363,9 +385,123 @@ function updateRanks() {
     filteredStudents = [...studentsData];
 }
 
+// Pagination functions
+function calculatePagination() {
+    if (itemsPerPage === 'all') {
+        totalPages = 1;
+        currentPage = 1;
+    } else {
+        totalPages = Math.ceil(filteredStudents.length / itemsPerPage);
+        // Ensure current page is within bounds
+        if (currentPage > totalPages) {
+            currentPage = totalPages || 1;
+        }
+    }
+}
+
+function updatePaginationInfo() {
+    const paginationInfo = document.getElementById('pagination-info');
+    if (!paginationInfo) return;
+    
+    const totalItems = filteredStudents.length;
+    
+    if (totalItems === 0) {
+        paginationInfo.textContent = 'No submissions found';
+        return;
+    }
+    
+    if (itemsPerPage === 'all') {
+        paginationInfo.textContent = `Showing all ${totalItems} submissions`;
+    } else {
+        const startIndex = (currentPage - 1) * itemsPerPage + 1;
+        const endIndex = Math.min(currentPage * itemsPerPage, totalItems);
+        paginationInfo.textContent = `Showing ${startIndex}-${endIndex} of ${totalItems} submissions`;
+    }
+}
+
+function updatePaginationControls() {
+    const prevBtn = document.getElementById('prev-page');
+    const nextBtn = document.getElementById('next-page');
+    const pageNumbers = document.getElementById('page-numbers');
+    
+    if (!prevBtn || !nextBtn || !pageNumbers) return;
+    
+    // Update previous/next buttons
+    prevBtn.disabled = currentPage <= 1 || itemsPerPage === 'all';
+    nextBtn.disabled = currentPage >= totalPages || itemsPerPage === 'all';
+    
+    // Generate page numbers
+    if (itemsPerPage === 'all') {
+        pageNumbers.innerHTML = '';
+        return;
+    }
+    
+    let pagesHtml = '';
+    const maxVisiblePages = 5;
+    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+    
+    // Adjust start page if we're near the end
+    if (endPage - startPage < maxVisiblePages - 1) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+    }
+    
+    // Add first page and ellipsis if needed
+    if (startPage > 1) {
+        pagesHtml += `<button class="page-number" onclick="goToPage(1)">1</button>`;
+        if (startPage > 2) {
+            pagesHtml += `<span class="page-number ellipsis">...</span>`;
+        }
+    }
+    
+    // Add visible page numbers
+    for (let i = startPage; i <= endPage; i++) {
+        const activeClass = i === currentPage ? 'active' : '';
+        pagesHtml += `<button class="page-number ${activeClass}" onclick="goToPage(${i})">${i}</button>`;
+    }
+    
+    // Add last page and ellipsis if needed
+    if (endPage < totalPages) {
+        if (endPage < totalPages - 1) {
+            pagesHtml += `<span class="page-number ellipsis">...</span>`;
+        }
+        pagesHtml += `<button class="page-number" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+    }
+    
+    pageNumbers.innerHTML = pagesHtml;
+}
+
+function changePage(direction) {
+    const newPage = currentPage + direction;
+    if (newPage >= 1 && newPage <= totalPages) {
+        currentPage = newPage;
+        renderLeaderboardTable();
+    }
+}
+
+function goToPage(page) {
+    if (page >= 1 && page <= totalPages) {
+        currentPage = page;
+        renderLeaderboardTable();
+    }
+}
+
+function changeItemsPerPage() {
+    const select = document.getElementById('items-per-page');
+    if (!select) return;
+    
+    const newItemsPerPage = select.value === 'all' ? 'all' : parseInt(select.value);
+    itemsPerPage = newItemsPerPage;
+    currentPage = 1; // Reset to first page
+    renderLeaderboardTable();
+}
+
 // Export functions for external use
 window.addStudent = addStudent;
 window.updateStudent = updateStudent;
 window.refreshLeaderboard = refreshLeaderboard;
 window.filterStudents = filterStudents;
 window.sortLeaderboard = sortLeaderboard;
+window.changePage = changePage;
+window.goToPage = goToPage;
+window.changeItemsPerPage = changeItemsPerPage;

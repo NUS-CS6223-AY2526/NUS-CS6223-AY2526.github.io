@@ -67,6 +67,32 @@ title: "CS6223 Hackathon Leaderboard"
             </tbody>
         </table>
     </div>
+
+    <div class="pagination-container">
+        <div class="pagination-info">
+            <span id="pagination-info">Showing 1-20 of 0 submissions</span>
+        </div>
+        <div class="pagination-controls">
+            <button id="prev-page" class="pagination-btn" onclick="changePage(-1)" disabled>
+                ← Previous
+            </button>
+            <div class="page-numbers" id="page-numbers">
+                <!-- Page numbers will be populated here -->
+            </div>
+            <button id="next-page" class="pagination-btn" onclick="changePage(1)" disabled>
+                Next →
+            </button>
+        </div>
+        <div class="items-per-page">
+            <label for="items-per-page">Items per page:</label>
+            <select id="items-per-page" onchange="changeItemsPerPage()">
+                <option value="10">10</option>
+                <option value="20" selected>20</option>
+                <option value="50">50</option>
+                <option value="all">All</option>
+            </select>
+        </div>
+    </div>
 </div>
 
 <div class="leaderboard-footer">
