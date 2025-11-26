@@ -1,8 +1,8 @@
 {
     "metadata": {
-        "lastUpdated": "2025-11-26T13:39:53Z",
+        "lastUpdated": "2025-11-26T13:42:14Z",
         "version": "1.0",
-        "totalGroups": 270,
+        "totalGroups": 271,
         "competitionName": "CS6223 Hackathon"
     },
     "groups": [
@@ -2433,6 +2433,15 @@
             "task2": 0,
             "task3": 0.2835778726998467,
             "tag": "v6",
+            "lastActivity": "2025-11-26",
+            "id": "group21"
+        },
+        {
+            "name": "zjhzjh123",
+            "task1": 0,
+            "task2": 0,
+            "task3": 0.06869556867630221,
+            "tag": "v7",
             "lastActivity": "2025-11-26",
             "id": "group21"
         }
