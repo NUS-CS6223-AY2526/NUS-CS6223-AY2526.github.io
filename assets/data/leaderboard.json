@@ -1,8 +1,8 @@
 {
     "metadata": {
-        "lastUpdated": "2025-11-26T14:03:26Z",
+        "lastUpdated": "2025-11-26T14:09:28Z",
         "version": "1.0",
-        "totalGroups": 276,
+        "totalGroups": 277,
         "competitionName": "CS6223 Hackathon"
     },
     "groups": [
@@ -2489,6 +2489,15 @@
             "tag": "v59",
             "lastActivity": "2025-11-26",
             "id": "group14"
+        },
+        {
+            "name": "jollibee",
+            "task1": 11,
+            "task2": 3,
+            "task3": 0.2347324822147642,
+            "tag": "v32",
+            "lastActivity": "2025-11-26",
+            "id": "group17"
         }
     ]
 }
