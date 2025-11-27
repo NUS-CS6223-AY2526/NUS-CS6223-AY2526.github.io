@@ -1,8 +1,8 @@
 {
     "metadata": {
-        "lastUpdated": "2025-11-27T09:36:55Z",
+        "lastUpdated": "2025-11-27T09:39:54Z",
         "version": "1.0",
-        "totalGroups": 390,
+        "totalGroups": 391,
         "competitionName": "CS6223 Hackathon"
     },
     "groups": [
@@ -3515,6 +3515,15 @@
             "tag": "v28",
             "lastActivity": "2025-11-27",
             "id": "group21"
+        },
+        {
+            "name": "wubc",
+            "task1": 0,
+            "task2": 1,
+            "task3": 0.002146731153241507,
+            "tag": "v47",
+            "lastActivity": "2025-11-27",
+            "id": "group13"
         }
     ]
 }
