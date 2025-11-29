@@ -1,6 +1,6 @@
 {
     "metadata": {
-        "lastUpdated": "2025-11-29T06:53:26Z",
+        "lastUpdated": "2025-11-29T06:56:15Z",
         "version": "1.0",
         "totalGroups": 615,
         "competitionName": "CS6223 Hackathon"
@@ -5534,9 +5534,9 @@
         },
         {
             "name": "bouh",
-            "task1": 4,
+            "task1": 5,
             "task2": 0,
-            "task3": 0.18827421731661503,
+            "task3": 0.011767115045506572,
             "tag": "v75",
             "lastActivity": "2025-11-29",
             "id": "group15"
